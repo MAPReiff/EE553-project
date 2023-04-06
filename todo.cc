@@ -81,10 +81,15 @@ class ToDoList {
 				file.close();
 			}
 		}
-
-}
+};
 
 int main() {
+  // new list loaded from a file
+  ToDoList list;
+
+  // hard-coded file for now, will ask user for filename later
+  list.loadFromFile("todo.txt");
+
 
 	return 0;
 }
