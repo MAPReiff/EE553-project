@@ -1,7 +1,6 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-
 using namespace std;
 
 class Task {
@@ -19,13 +18,11 @@ class ToDoList {
 		vector<Task *> tasks;
 
 	public:
-		// add a task to the list
 		void addTask(string description) {
 			Task *newTask = new Task(description);
 			tasks.push_back(newTask);
 		}
 
-		// remove a task from the list
 		void removeTask(int index) {
 			if (index >= 0 && index < tasks.size()) {
 				delete tasks[index];
@@ -33,14 +30,12 @@ class ToDoList {
 			}
 		}
 
-		// mark a task as completed
 		void completeTask(int index) {
 			if (index >= 0 && index < tasks.size()) {
 				tasks[index]->completed = true;
 			}
 		}
 
-		// display the list of tasks
 		void displayTasks() {
 			cout << "Tasks:\n";
 			for (int i = 0; i < tasks.size(); i++) {
@@ -55,7 +50,6 @@ class ToDoList {
 			}
 		}
 
-		// save the list of tasks to a file
 		void saveToFile(string filename) {
 			ofstream file(filename);
 			for (int i = 0; i < tasks.size(); i++) {
@@ -65,7 +59,6 @@ class ToDoList {
 			file.close();
 		}
 
-		// load the list of tasks from a file
 		void loadFromFile(string filename) {
 			ifstream file(filename);
 			if (file.is_open()) {
@@ -84,12 +77,43 @@ class ToDoList {
 };
 
 int main() {
-  // new list loaded from a file
-  ToDoList list;
+	ToDoList todoList;
+	todoList.loadFromFile("tasks.txt");
 
-  // hard-coded file for now, will ask user for filename later
-  list.loadFromFile("todo.txt");
+	while (true) {
+		string command;
+		cout << "Enter command (add/remove/complete/display/save/quit): ";
+		cin >> command;
 
+		if (command == "add") {
+			string description;
+			cout << "Enter task description: ";
+			cin.ignore();
+			getline(cin, description);
+			todoList.addTask(description);
+		} else if (command == "remove") {
+			int index;
+			cout << "Enter task index: ";
+			cin >> index;
+			todoList.removeTask(index);
+		} else if (command == "complete") {
+			int index;
+			cout << "Enter task index: ";
+			cin >> index;
+			todoList.completeTask(index);
+		} else if (command == "display") {
+			todoList.displayTasks();
+		} else if (command == "save") {
+			string filename;
+			cout << "Enter filename: ";
+			cin >> filename;
+			todoList.saveToFile(filename);
+		} else if (command == "quit") {
+			break;
+		} else {
+			cout << "Invalid command\n";
+		}
+	}
 
 	return 0;
 }
