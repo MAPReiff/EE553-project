@@ -78,7 +78,11 @@ class ToDoList {
 
 int main() {
 	ToDoList todoList;
-	todoList.loadFromFile("tasks.txt");
+	cout << "What is your name?" << endl;
+	string name;
+	cin >> name;
+	cout << "Loading from " + name + ".txt" << endl;
+	todoList.loadFromFile(name + ".txt");
 
 	while (true) {
 		string command;
@@ -104,10 +108,8 @@ int main() {
 		} else if (command == "display") {
 			todoList.displayTasks();
 		} else if (command == "save") {
-			string filename;
-			cout << "Enter filename: ";
-			cin >> filename;
-			todoList.saveToFile(filename);
+			todoList.saveToFile(name);
+			cout << "Saved to " + name + ".txt" << endl;
 		} else if (command == "quit") {
 			break;
 		} else {
